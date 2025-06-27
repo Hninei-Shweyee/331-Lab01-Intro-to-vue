@@ -30,15 +30,11 @@ const productDisplay={
                 `,
                 props:{
                     premium:Boolean},
-                    setup(props){
-                        const shipping=computed(()=>{
-                            if(props.premium){
-                                return 'Free'
-
-                            }else{
-                                return 30
-                            }
-                        })
+                    setup(props,{emit}){
+                        const shipping = computed(() => {
+                         return props.premium ? 'Free' : '$2.99';
+                 });
+                                
                         const product=ref('Boots')
                     const brand=ref('SE 331')
             // const description=ref('These are the best boots ever!')
@@ -61,7 +57,7 @@ const productDisplay={
                 }
             ])
             const selectedVariant=ref(0)
-            const cart=ref(0)
+            const cart=ref([])
             function updateVariant(index){
                 selectedVariant.value=index;
             }
@@ -73,7 +69,7 @@ const productDisplay={
             })
             
             function addToCart(){
-                cart.value+=1
+                emit('add-to-cart', variants.value[selectedVariant.value].id)
             }
             const title=computed(()=>{
                 return brand.value+' '+product.value
@@ -102,9 +98,11 @@ const productDisplay={
                 updateVariant,
                 shipping
                 
+                
             }
 
-        }
-    }
+                    }
+                }
+    
                 
 
