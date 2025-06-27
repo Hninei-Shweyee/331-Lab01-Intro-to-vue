@@ -25,84 +25,56 @@ const productDisplay={
                    
                 
                 <button class="button" :disabled='!inStock' @click="addToCart" :class="{disabledButton:!inStock}">Add to Cart</button>
+                <button class="button" @click="removeFromCart">
+                Remove from Cart
+                    </button>
                 </div>
                 </div>
                 `,
                 props:{
                     premium:Boolean},
                     setup(props,{emit}){
-                        const shipping = computed(() => {
-                         return props.premium ? 'Free' : '$2.99';
-                 });
-                                
-                        const product=ref('Boots')
-                    const brand=ref('SE 331')
-            // const description=ref('These are the best boots ever!')
-            // const image=ref('./assets/images/socks_green.jpg')
-            // const inStock=ref(true)
-            const inventory=ref(100)
-            const details=ref([
-                '50% cotton',
-                '30% wool',
-                '20% polyester'
-            ])
-           
-            
-            const variants=ref([
-                {
-                    id: 2234,color: 'green',image: './assets/images/socks_green.jpg',quantity:50
-                },
-                {
-                    id: 2235,color: 'blue',image: './assets/images/socks_blue.jpg',quantity:0
-                }
-            ])
-            const selectedVariant=ref(0)
-            const cart=ref([])
-            function updateVariant(index){
-                selectedVariant.value=index;
-            }
-            const image=computed(()=>{
-                return variants.value[selectedVariant.value].image
-            })
-            const inStock=computed(()=>{
-                return variants.value[selectedVariant.value].quantity
-            })
-            
-            function addToCart(){
-                emit('add-to-cart', variants.value[selectedVariant.value].id)
-            }
-            const title=computed(()=>{
-                return brand.value+' '+product.value
-            })
-            function updateImage(variantImage){
-                image.value=variantImage
-            }
-        
-                    
-                    
-            return{
-                // product,
-                image,
-                
-                inStock,
-                inventory,
-            
-                details,
-                variants,
-                sizes: ['S', 'M', 'L'],
-                
-                addToCart,
-                updateImage,
-                
-                title,
-                updateVariant,
-                shipping
-                
-                
-            }
+                        const shipping = computed(() => (props.premium ? "Free" : "$2.99"));
+    const product = ref("Boots");
+    const brand = ref("SE 331");
+    const inventory = ref(100);
+    const details = ref(["50% cotton", "30% wool", "20% polyester"]);
+    const variants = ref([
+      { id: 2234, color: "green", image: "./assets/images/socks_green.jpg", quantity: 50 },
+      { id: 2235, color: "blue", image: "./assets/images/socks_blue.jpg", quantity: 0 }
+    ]);
+    const selectedVariant = ref(0);
 
-                    }
-                }
-    
-                
+    const image = computed(() => variants.value[selectedVariant.value].image);
+    const inStock = computed(() => variants.value[selectedVariant.value].quantity);
+    const title = computed(() => brand.value + " " + product.value);
+
+    function updateVariant(index) {
+      selectedVariant.value = index;
+    }
+
+    function addToCart() {
+      emit("add-to-cart");
+    }
+
+    // ✅ New method to remove from cart
+    function removeFromCart() {
+      emit("remove-from-cart");
+    }
+
+    return {
+      image,
+      inStock,
+      inventory,
+      details,
+      variants,
+      selectedVariant,
+      addToCart,
+      removeFromCart, // 👈 expose this method
+      updateVariant,
+      shipping,
+      title
+    };
+  },
+};
 
