@@ -15,6 +15,7 @@ const app=createApp({
         }
     })
     app.component('product-display',productDisplay)
+    app.component('product-details',productDetails)
     app.mount('#app')
     
         
