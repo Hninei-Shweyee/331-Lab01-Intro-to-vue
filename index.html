@@ -32,9 +32,12 @@
 
         </div>
             <div class="product-info">
-                <h1>{{product}}</h1>
+                <!-- <h1>{{product}}</h1> -->
+                 <!-- <h1>{{brand+' '+product}}</h1> -->
+                  <h1>{{title}}</h1>
                 <p v-if="sales">On Sales</p>
                 <p v-else>Not on Sales</p>
+                <p v-if="sales" class="sale-message">{{saleMessage}}</p>
                 <p v-if="inStock && inventory>10">In stock</p>
                 <p v-else-if="inventory<=10 && inventory>0">Almost out of stock</p>
                 <p v-else>Out of Stock</p>
@@ -44,7 +47,7 @@
                 <span v-for="(size, index) in sizes" :key="index">
                 {{ size }}<span v-if="index < sizes.length - 1">, </span>
                 </span>
-                <div v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)" class="color-circle" :style="{backgroundColor: variant.color}">
+                <div v-for="(variant,index) in variants" :key="variant.id" @mouseover="updateVariant(index)" class="color-circle" :style="{backgroundColor: variant.color}">
 
                 </div>
                     <!-- {{variant.color}} -->
