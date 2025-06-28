@@ -17,16 +17,19 @@
         <div class="nav-bar"></div>
         <div class="cart">Cart({{cart.length}})</div>
         
-        <product-display :premium="premium" @add-to-cart="updateCart" @remove-from-cart="removeFromCart"></product-display>
+        <product-display :premium="premium" :reviews="reviews" @add-to-cart="updateCart" @remove-from-cart="removeFromCart" @review-submitted="addReview"></product-display>
         
 
-        <div class="cart">Cart({{ cart.length }})</div>
+        
     </div>
         
 
     <!-- Import Js -->
      <script src="./components/ProductDisplay.js"></script>
     <script src="./components/ProductDetail.js"></script>
+    <script src="./components/ReviewForm.js"></script>
+    <script src="./components/ReviewList.js"></script>
+    
     <script src="./main.js"></script>
 </body>
 

@@ -29,11 +29,17 @@ const productDisplay={
                 Remove from Cart
                     </button>
                 </div>
+                
+                
+                <review-form @review-submitted="forwardReview"></review-form>
+                <review-list v-if="reviews.length" :reviews="reviews"></review-list>
                 </div>
                 `,
                 props:{
-                    premium:Boolean},
+                    premium:Boolean,
+                    reviews: Array },
                     setup(props,{emit}){
+                        const reviews = props.reviews;
                         const shipping = computed(() => (props.premium ? "Free" : "$2.99"));
     const product = ref("Boots");
     const brand = ref("SE 331");
@@ -61,6 +67,9 @@ const productDisplay={
     function removeFromCart() {
       emit("remove-from-cart");
     }
+    function forwardReview(review) {
+  emit('review-submitted', review);
+}
 
     return {
       image,
@@ -73,7 +82,9 @@ const productDisplay={
       removeFromCart, // 👈 expose this method
       updateVariant,
       shipping,
-      title
+      title,
+      forwardReview,
+      reviews
     };
   },
 };
