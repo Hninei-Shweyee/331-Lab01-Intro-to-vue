@@ -1,33 +1,34 @@
-const {createApp,ref,computed}= Vue
+const {createApp,reactive,toRefs,ref,computed}= Vue
 const app=createApp({
     setup(){
             
-            const cart=ref([])
-            const reviews=ref([])
-            const premium=ref(false)
-            function updateCart(){
-                cart.value.push(cart.value.length)
-            }
-            function removeFromCart(){
-                 if (cart.value.length > 0) {
-                 cart.value.splice(cart.value.length - 1, 1); // remove last item
-      }
+            const state = reactive({
+      cart: [],
+      reviews: [],
+      premium: false
+    });
             
-            }
-            function addReview(review){
-                reviews.value.push(review);
-                console.log(review);
-            }
-            return{
-                
-                cart,
-                premium,
-                reviews,
-                updateCart,
-                removeFromCart,
-                addReview
-                
-            };
+            function updateCart() {
+      state.cart.push(state.cart.length);
+    }
+
+                function removeFromCart() {
+      if (state.cart.length > 0) {
+        state.cart.splice(state.cart.length - 1, 1);
+      }
+    }
+
+            
+             function addReview(review) {
+      state.reviews.push(review); // ✅ fixed here
+      console.log(state.reviews);
+    }
+            return {
+      ...toRefs(state),
+      updateCart,
+      removeFromCart,
+      addReview
+    };
 
         }
     });
